@@ -44,10 +44,7 @@ def setenv(args: Namespace) -> None:
     Setenv for langkit.
     """
     for cwd in (LKT_LIB_ROOT, PYTHON_LIB_ROOT):
-        subprocess.check_call(
-            [sys.executable, "./manage.py", "setenv"],
-            cwd=cwd
-        )
+        subprocess.check_call(["./manage.py", "setenv"], cwd=cwd)
 
 
 def make(args: Namespace) -> None:
@@ -68,12 +65,12 @@ def make(args: Namespace) -> None:
     shutil.rmtree(PYTHON_LIB_ROOT / 'build', ignore_errors=True)
 
     m1 = subprocess.Popen(
-        [sys.executable, "./manage.py", "-Dgnu-full", "make", "-P",
+        ["./manage.py", "-Dgnu-full", "make", "-P",
          "--disable-warning", "undocumented-nodes"],
         cwd=PYTHON_LIB_ROOT
     )
     m2 = subprocess.Popen(
-        [sys.executable, "./manage.py", "-Dgnu-full", "make", "-P"],
+        ["./manage.py", "-Dgnu-full", "make", "-P"],
         cwd=LKT_LIB_ROOT
     )
     m1.wait()
@@ -87,8 +84,7 @@ def test(args: Namespace, remaining_args: List[str]) -> None:
     Run langkit's testsuite.
     """
     subprocess.check_call(
-        [sys.executable, str(LANGKIT_ROOT / 'testsuite' / 'testsuite.py'),
-         '-E']
+        ['python3', str(LANGKIT_ROOT / 'testsuite' / 'testsuite.py'), '-Edtmp']
         + remaining_args
     )
 
